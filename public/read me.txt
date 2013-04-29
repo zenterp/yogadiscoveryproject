@@ -1,0 +1,29 @@
+Landing Page
+====================
+
+Contains
+---------------------
+* Bootstrap 2.0.2
+* jQuery
+* jquery.easing.1.3.js
+* Fully Responsive
+* Custom Page Layouts
+* Email subscribe field
+* Font Awesome
+
+Feature
+-----------------------
+* Smooth Scrolling 
+* Transition and transform 
+* Tooltips
+* Carousel
+* Scrollspy
+
+Browser
+---------------------
+
+* Firefox 4+
+* Latest Chrome
+* Latest Safari
+* Internet Explorer 9+
+* Opera 11
