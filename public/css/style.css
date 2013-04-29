@@ -9,7 +9,7 @@ html{
 }
 body{
 	padding:50px 0 0 0;
-   background: url(../img/bg_1.jpg) no-repeat center center fixed; 
+   background: url(../img/world_connection_visualization.jpg) no-repeat center center fixed; 
    -webkit-background-size: cover; 
    -moz-background-size: cover; 
    -o-background-size: cover; 
@@ -169,3 +169,7 @@ a.linkedin {background-position:-174px 0px;}
 a.linkedin:hover {background-position:-174px 24px;}
 a.tumblr {background-position:-199px 0px;}
 a.tumblr:hover {background-position:-199px 24px;}
+
+.white_box input { 
+	float:right;
+}
