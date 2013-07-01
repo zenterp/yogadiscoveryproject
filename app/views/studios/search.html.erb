@@ -1,0 +1,102 @@
+<% content_for :navigation do %>
+
+<% end %>
+
+<div style="position:relative;background-color:#ccc;opacity:0.9;height:450px;" class="well">
+
+  <div class="map" id="mapCanvas" style="width:60%; height:450px; float:right"></div>
+  
+  <div style="width:33%">
+    <div class="well">
+  <input type="search" id="locationSearch" style="padding:10px; width:80%; margin-left:5%;font-size:150%" placeholder="search studios in '<%= @location %>'"/></div>
+  <div style="max-height:350px;overflow-y:scroll">
+    <table class="table table-striped" >
+
+      <% if @studios.present? && !@studios.empty? %>
+        <tr style="padding-bottom:0.5em">
+          <h2 style='text-align:center'><%= @studios.count.humanize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> in <%= @location %>.
+        <tr/>      
+        <% @studios.each do |studio| %>
+        <tr data-latitude="<%= studio['latitude'] %>" data-longitude="<%= studio['longitude'] %>"> 
+          <td><%= studio['name'] %></td>
+          <td><%= studio['distance'].to_f.round(2) %> miles</td>
+        </tr>
+        <% end %>
+      <% else %>
+        <tr> 
+          Sorry there are no studios in that area
+        </tr>
+      <% end %>
+    </table>
+  </div>
+  <div>
+
+</div>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script>
+
+  function panToLocation(latitude,longitude) {
+    window.map.panTo(new google.maps.LatLng(latitude, longitude));
+  }
+
+  window.buildStudios = function() {
+    var studios = JSON.parse('<%= @studios.to_json.html_safe %>');
+  
+    return studios;
+  }
+
+  function initialize() {
+
+    var latitude = <%= @studios.first.try(:[], 'latitude') %>
+    var longitude = <%= @studios.first.try(:[], 'longitude') %>
+
+    var mapOptions = {
+      zoom: 12,
+      center: new google.maps.LatLng(latitude, longitude),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    window.map = new google.maps.Map(document.getElementById('mapCanvas'),
+        mapOptions);
+
+    window.mapMarkers = [];
+    $.each(buildStudios(), function(i, studio) { 
+      marker = new google.maps.Marker({
+        position: new google.maps.LatLng(studio.latitude, studio.longitude),
+        map: window.map,
+        title: studio.name
+      });
+
+      window.mapMarkers.push(marker);
+      marker.id = studio.id
+    });
+  }
+  
+  google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+<script>
+  $(function(){
+    $("input#locationSearch").on('focus',function(){
+      addLocationSearchHandler();
+    });
+
+    $("input#locationSearch").on('blur',function(){
+      removeLocationSearchHandler();
+    });
+
+    function addLocationSearchHandler(){
+      $("input#locationSearch").on('keyup',function(event){
+        if (event.which == '13') {
+          var location = $("input#locationSearch").val().toLowerCase();
+          location = location.split(' ').join('-');
+          document.location.href = '/studios-near/' + location;
+        }        
+      });
+    }
+
+    function removeLocationSearchHandler(){
+      $("input#locationSearch").off('keyup');
+    }
+  });
+</script>
