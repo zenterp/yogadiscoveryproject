@@ -14,7 +14,7 @@
 
       <% if @studios.present? && !@studios.empty? %>
         <tr style="padding-bottom:0.5em">
-          <h2 style='text-align:center'><%= @studios.count.humanize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> in <%= @location %>.
+          <h2 style='text-align:center'><%= @studios.count.humanize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> near <%= @location %>.
         <tr/>      
         <% @studios.each do |studio| %>
         <tr data-latitude="<%= studio['latitude'] %>" data-longitude="<%= studio['longitude'] %>"> 
