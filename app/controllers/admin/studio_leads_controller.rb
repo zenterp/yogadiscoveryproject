@@ -1,4 +1,4 @@
-class Admin::StudioLeadsController < Admin::ApplicationController
+class Admin::StudioLeadsController < ApplicationController
   before_filter :authenticate_admin!
 
   def authenticate_admin!
