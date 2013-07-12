@@ -2,22 +2,22 @@
 
 <% end %>
 
-<div style="position:relative;background-color:#ccc;opacity:0.9;height:450px;" class="well">
+<div style="position:relative;background:none;opacity:0.9;height:450px;" class="well">
 
   <div class="map" id="mapCanvas" style="width:60%; height:450px; float:right"></div>
   
   <div style="width:33%">
     <div class="well">
-  <input type="search" id="locationSearch" style="padding:10px; width:80%; margin-left:5%;font-size:150%" placeholder="search studios in '<%= @location %>'"/></div>
+  <input type="search" id="locationSearch" style="padding:10px; width:80%; margin-left:5%;font-size:150%" placeholder="search city and/or address"/></div>
   <div style="max-height:350px;overflow-y:scroll">
     <table class="table table-striped" >
 
       <% if @studios.present? && !@studios.empty? %>
         <tr style="padding-bottom:0.5em">
-          <h2 style='text-align:center'><%= @studios.count.humanize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> near <%= @location %>.
+          <h2 style='text-align:center;color:#eee'><%= @studios.count.humanize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> near <%= @location %>.
         <tr/>      
         <% @studios.each do |studio| %>
-        <tr data-latitude="<%= studio['latitude'] %>" data-longitude="<%= studio['longitude'] %>"> 
+        <tr style="background-color:#ccc" data-latitude="<%= studio['latitude'] %>" data-longitude="<%= studio['longitude'] %>"> 
           <td><%= studio['name'] %></td>
           <td><%= studio['distance'].to_f.round(2) %> miles</td>
         </tr>
