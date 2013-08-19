@@ -5,6 +5,10 @@ gem 'devise'
 gem 'httparty'
 gem 'humanize'
 
+group :development do
+  gem 'pry'
+end
+
 gem 'thin'
 gem 'pg'
 

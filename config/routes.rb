@@ -9,5 +9,5 @@ Yogadiscoveryproject::Application.routes.draw do
   get 'studios-near/:location', to: 'studios#search'
   get 'studios/search', to: 'studios#search'
 
-  get '/', to: redirect('/studios-near/portland-or')
+  get '/', to: redirect('/studios-near/san-francisco-ca')
 end

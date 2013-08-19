@@ -8,14 +8,13 @@
   
   <div style="width:33%">
     <div class="well">
-  <input type="search" id="locationSearch" style="padding:10px; width:80%; margin-left:5%;font-size:150%" placeholder="search city and/or address"/></div>
+      <h2 style='text-align:center;color:#black'><%= @studios.count.humanize.capitalize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> near <%= @location %>.</h2>
+
+  </div>
   <div style="max-height:350px;overflow-y:scroll">
     <table class="table table-striped" >
 
-      <% if @studios.present? && !@studios.empty? %>
-        <tr style="padding-bottom:0.5em">
-          <h2 style='text-align:center;color:#eee'><%= @studios.count.humanize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> near <%= @location %>.
-        <tr/>      
+      <% if @studios.present? && !@studios.empty? %>   
         <% @studios.each do |studio| %>
         <tr style="background-color:#ccc" data-latitude="<%= studio['latitude'] %>" data-longitude="<%= studio['longitude'] %>"> 
           <td><%= studio['name'] %></td>
