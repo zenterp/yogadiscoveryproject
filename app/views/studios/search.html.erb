@@ -4,31 +4,30 @@
 
 <div style="position:relative;background:none;opacity:0.9;height:450px;" class="well">
 
-  <div class="map" id="mapCanvas" style="width:60%; height:450px; float:right"></div>
+  <div class="map" id="mapCanvas"></div>
   
-  <div style="width:33%">
-    <div class="well">
-      <h2 style='text-align:center;color:#black'><%= @studios.count.humanize.capitalize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> near <%= @location %>.</h2>
+  <div id="studiosList">
+      <div class="well" id='cityCountHeader'>
+        <h2 style='text-align:center;color:#black'><%= @studios.count.humanize.capitalize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> near <%= @location %>.</h2>
+      </div>
+    <div style="max-height:350px;overflow-y:scroll">
+      <table class="table table-striped" >
 
-  </div>
-  <div style="max-height:350px;overflow-y:scroll">
-    <table class="table table-striped" >
-
-      <% if @studios.present? && !@studios.empty? %>   
-        <% @studios.each do |studio| %>
-        <tr style="background-color:#ccc" data-latitude="<%= studio['latitude'] %>" data-longitude="<%= studio['longitude'] %>"> 
-          <td><%= studio['name'] %></td>
-          <td><%= studio['distance'].to_f.round(2) %> miles</td>
-        </tr>
-        <% end %>
-      <% else %>
+        <% if @studios.present? && !@studios.empty? %>   
+          <% @studios.each do |studio| %>
+            <tr style="background-color:#ccc" data-latitude="<%= studio['latitude'] %>" data-longitude="<%= studio['longitude'] %>"> 
+              <td><%= studio['name'] %></td>
+              <td><%= studio['distance'].to_f.round(2) %> miles</td>
+            </tr>
+          <% end %>
+        <% else %>
         <tr> 
           Sorry there are no studios in that area
         </tr>
-      <% end %>
-    </table>
+        <% end %>
+      </table>
+    </div>
   </div>
-  <div>
 
 </div>
 
