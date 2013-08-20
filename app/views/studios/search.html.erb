@@ -8,9 +8,9 @@
   
   <div id="studiosList">
       <div class="well" id='cityCountHeader'>
-        <h2 style='text-align:center;color:#black'><%= @studios.count.humanize.capitalize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> near <%= @location %>.</h2>
+        <h2><%= @studios.count.humanize.capitalize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> near <%= link_to @location, "#change_location" %>.</h2>
       </div>
-    <div style="max-height:350px;overflow-y:scroll">
+    <div class='studiosList' style="overflow-y:scroll">
       <table class="table table-striped" >
 
         <% if @studios.present? && !@studios.empty? %>   

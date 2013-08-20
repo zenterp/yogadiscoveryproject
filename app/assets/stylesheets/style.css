@@ -181,6 +181,10 @@ a.tumblr:hover {background-position:-199px 24px;}
 	float:right;
 }
 
+h2 {
+	text-align:center;color:#black;padding-right:15px
+}
+
 @media (max-width: 600px) {
   #mapCanvas {
     display: none;
@@ -208,8 +212,17 @@ a.tumblr:hover {background-position:-199px 24px;}
   	height:70px;
   	font-size:50%;
   	padding:10px;
+  	margin-bottom:0px;
   }
-
+  .studiosList {
+  	top:90px;
+  	position:fixed;
+  	bottom:0px;
+  	height:85%;
+  }
+  h2 {
+  	text-align:center;color:#black;padding-right:15px
+  }
   footer {
   	display:none;
   }
