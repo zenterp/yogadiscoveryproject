@@ -13,3 +13,23 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+
+$(function(){
+  $(".studiosList").delegate('tr','click', function(e){
+    alert($(e.target).parent().find('td:first').text());
+  });
+
+  function loadCity(city){
+    var url = '/studios-near/' + city;
+    $.get(url, function(html){
+      var $dom = $(html);
+      $("#cityCountHeader").html($dom.find("#cityCountHeader").html());
+      $(".studiosList").html($dom.find(".studiosList").html());
+    });
+    document.history.pushState(url,null,url);
+  }
+
+  $("#citySelector").live('change', function(){
+     loadCity($(this).val());
+  });
+});

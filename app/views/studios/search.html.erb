@@ -8,16 +8,24 @@
   
   <div id="studiosList">
       <div class="well" id='cityCountHeader'>
-        <h2><%= @studios.count.humanize.capitalize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> near <%= link_to @location, "#change_location" %>.</h2>
+        <h2><%= @studios.count.humanize.capitalize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> near
+          <select id='citySelector' style='width:30%'>
+            <option value='<%= @city.keys[0] %>'><%= @city[:name] %></option>
+            
+            <% @other_cities.each do |key,val| %>
+              <option value='<%= key %>'><%= val[:name] %></  option>
+            <% end %>
+          </select>
+        </h2>
       </div>
     <div class='studiosList' style="overflow-y:scroll">
       <table class="table table-striped" >
 
         <% if @studios.present? && !@studios.empty? %>   
           <% @studios.each do |studio| %>
-            <tr style="background-color:#ccc" data-latitude="<%= studio['latitude'] %>" data-longitude="<%= studio['longitude'] %>"> 
-              <td><%= studio['name'] %></td>
-              <td><%= studio['distance'].to_f.round(2) %> miles</td>
+            <tr class='studioRow' data-latitude="<%= studio['latitude'] %>" data-longitude="<%= studio['longitude'] %>"> 
+              <td class='studioName'><%= truncate(studio['name'], length: 25) %></td>
+              <td style='padding:1.3em;'><%= studio['distance'].to_f.round(2) %> miles</td>
             </tr>
           <% end %>
         <% else %>
