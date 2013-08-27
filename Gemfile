@@ -4,6 +4,7 @@ gem 'rails', '3.2.13'
 gem 'devise'
 gem 'httparty'
 gem 'humanize'
+gem 'redis'
 
 group :development do
   gem 'pry'

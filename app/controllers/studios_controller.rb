@@ -1,21 +1,22 @@
 class StudiosController < ApplicationController
   before_filter :authenticate_user!, only: [:new]
-
+  before_filter :check_cache only: :search
   def new
   	@studios = YogaStudioLead.all.to_json
   end 	
 
   def search
     @city = cities.delete(params[:location])
+
+
     @other_cities = cities
     latlng = @city[:latlng].split(',')
     @location = @city[:name]
-    url = "http://yoganow-api.herokuapp.com/yoga_studios.json?lat=#{latlng[0]}&lng=#{latlng[1]}"
-    @studios = HTTParty.get(url).parsed_response['studios']    
+
+    @studios = Studio.find(latlng[0], latlng[1])
   end 
 
   def cities
     @cities ||= City.all    
   end
-
 end
