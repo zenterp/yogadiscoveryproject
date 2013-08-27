@@ -8,8 +8,8 @@
   
   <div id="studiosList">
       <div class="well" id='cityCountHeader'>
-        <h2><%= @studios.count.humanize.capitalize %> <%= @studios.count > 1 ? 'studios' : 'studio' %> near
-          <select id='citySelector' style='width:30%'>
+        <h2><%= @studios.count %> <%= @studios.count > 1 ? 'Studios' : 'Studio' %> near
+          <select id='citySelector'>
             <option value='<%= @city.keys[0] %>'><%= @city[:name] %></option>
             
             <% @other_cities.each do |key,val| %>
@@ -24,7 +24,7 @@
         <% if @studios.present? && !@studios.empty? %>   
           <% @studios.each do |studio| %>
             <tr class='studioRow' data-latitude="<%= studio['latitude'] %>" data-longitude="<%= studio['longitude'] %>"> 
-              <td class='studioName'><%= truncate(studio['name'], length: 25) %></td>
+              <td class='studioName' data-id="<%= studio['id']%>" style='padding:15px;'><%= truncate(studio['name'], length: 25) %></td>
               <td style='padding:1.3em;'><%= studio['distance'].to_f.round(2) %> miles</td>
             </tr>
           <% end %>
@@ -38,48 +38,6 @@
   </div>
 
 </div>
-
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-<script>
-
-  function panToLocation(latitude,longitude) {
-    window.map.panTo(new google.maps.LatLng(latitude, longitude));
-  }
-
-  window.buildStudios = function() {
-    var studios = JSON.parse('<%= @studios.to_json.html_safe %>');
-  
-    return studios;
-  }
-
-  function initialize() {
-
-    var latitude = <%= @studios.first.try(:[], 'latitude') %>
-    var longitude = <%= @studios.first.try(:[], 'longitude') %>
-
-    var mapOptions = {
-      zoom: 12,
-      center: new google.maps.LatLng(latitude, longitude),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    window.map = new google.maps.Map(document.getElementById('mapCanvas'),
-        mapOptions);
-
-    window.mapMarkers = [];
-    $.each(buildStudios(), function(i, studio) { 
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(studio.latitude, studio.longitude),
-        map: window.map,
-        title: studio.name
-      });
-
-      window.mapMarkers.push(marker);
-      marker.id = studio.id
-    });
-  }
-  
-  google.maps.event.addDomListener(window, 'load', initialize);
-</script>
 
 <script>
   $(function(){

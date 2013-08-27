@@ -8,8 +8,8 @@ html{
 	height:100%;
 }
 body{
+  background-color:#f5f5f5;
 	padding:50px 0 0 0;
-  background: url(../img/world_connection_visualization.jpg) no-repeat center center fixed; 
    -webkit-background-size: cover; 
    -moz-background-size: cover; 
    -o-background-size: cover; 
@@ -204,7 +204,7 @@ h2 {
 
   .studioName {
   	font-size:130%;
-  	padding:1.3em
+  	padding:15px;
   }
 
   .studioRow {
@@ -226,6 +226,9 @@ h2 {
   	padding:10px;
   	margin-bottom:0px;
   }
+  #citySelector {
+    width:60%;
+  }
   .studiosList {
   	top:60px;
   	position:fixed;
@@ -241,5 +244,8 @@ h2 {
   }
   footer {
   	display:none;
+  }
+  .studiosList tbody {
+    background-color: rgba(72, 3, 111, 0.8);
   }
 }

@@ -18,4 +18,17 @@ class StudiosController < ApplicationController
   def cities
     @cities ||= City.all    
   end
+
+  def show
+    studio_and_classes = Studio.classes(params[:id])
+    @yoga_studio = studio_and_classes['studio']
+    classes = []
+
+    today = Time.now.strftime("%A").downcase
+
+    studio_and_classes['classes'].each do |key, val|
+      classes.push(studio_and_classes['classes'][key])
+    end
+    @yoga_classes = studio_and_classes['classes'][today] || []
+  end
 end

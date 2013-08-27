@@ -16,7 +16,8 @@
 
 $(function(){
   $(".studiosList").delegate('tr','click', function(e){
-    alert($(e.target).parent().find('td:first').text());
+    var url = document.location.href;
+    document.location.href = url + "/" + $(e.target).parent().find('td:first').data('id');
   });
 
   function loadCity(city){
