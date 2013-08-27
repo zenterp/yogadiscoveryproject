@@ -1,13 +1,12 @@
 class StudiosController < ApplicationController
   before_filter :authenticate_user!, only: [:new]
-  before_filter :check_cache only: :search
+
   def new
   	@studios = YogaStudioLead.all.to_json
   end 	
 
   def search
     @city = cities.delete(params[:location])
-
 
     @other_cities = cities
     latlng = @city[:latlng].split(',')
