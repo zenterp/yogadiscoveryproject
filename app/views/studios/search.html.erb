@@ -41,26 +41,23 @@
 
 <script>
   $(function(){
-    $("input#locationSearch").on('focus',function(){
-      addLocationSearchHandler();
+    $(".studiosList").delegate('tr','click', function(e){
+      var url = document.location.href;
+      document.location.href = url + "/" + $(e.target).parent().find('td:first').data('id');
     });
 
-    $("input#locationSearch").on('blur',function(){
-      removeLocationSearchHandler();
-    });
-
-    function addLocationSearchHandler(){
-      $("input#locationSearch").on('keyup',function(event){
-        if (event.which == '13') {
-          var location = $("input#locationSearch").val().toLowerCase();
-          location = location.split(' ').join('-');
-          document.location.href = '/studios-near/' + location;
-        }        
+    function loadCity(city){
+      var url = '/studios-near/' + city;
+      $.get(url, function(html){
+        var $dom = $(html);
+        $("#cityCountHeader").html($dom.find("#cityCountHeader").html());
+        $(".studiosList").html($dom.find(".studiosList").html());
       });
+      document.history.pushState(url,null,url);
     }
 
-    function removeLocationSearchHandler(){
-      $("input#locationSearch").off('keyup');
-    }
+    $("#citySelector").live('change', function(){
+       loadCity($(this).val());
+    });
   });
 </script>

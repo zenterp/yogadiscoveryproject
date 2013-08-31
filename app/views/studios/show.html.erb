@@ -18,13 +18,21 @@
         <% if @yoga_classes.present? && !@yoga_classes.empty? %>   
           <% @yoga_classes.each do |yoga_class| %>
             <tr class='studioRow'> 
-              <td class='studioName' style='padding:15px;'><%= yoga_class['name'] %></td>
-              <td style='padding:1.3em;'><%= Time.parse(yoga_class['start_time']).strftime("%l:%M %P") %> - <%= (Time.parse(yoga_class['start_time']) + yoga_class['duration'].minutes).strftime("%l:%M %P") %></td>
+              <td class='studioName' style='padding:15px;'>
+                <a href='/studios/<%= @yoga_studio["id"] %>/classes/<%= yoga_class["id"] %>'>
+                  <%= yoga_class['name'] %>
+                </a>
+              </td>
+              <td style='padding:1.3em;'><%= Time.parse(yoga_class['start_time']).strftime("%l:%M %P") %> - <%= (Time.parse(yoga_class['start_time']) + yoga_class['duration'].minutes).strftime("%l:%M %P") %>
+              </td>
             </tr>
           <% end %>
         <% else %>
-        <tr> 
-          Sorry there are no studios in that area
+        <tr>
+          <td style='text-align:center; padding:1em;'>
+            We have recorded no classes for today at this studio.
+          </td>
+          
         </tr>
         <% end %>
       </table>
@@ -33,70 +41,7 @@
 
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
-<script>
 
-  function panToLocation(latitude,longitude) {
-    window.map.panTo(new google.maps.LatLng(latitude, longitude));
-  }
-
-  window.buildStudios = function() {
-    var studios = JSON.parse('<%= @yoga_classes.to_json.html_safe %>');
-  
-    return studios;
-  }
-
-  function initialize() {
-
-    var latitude = <%= @yoga_classes.first.try(:[], 'latitude') %>
-    var longitude = <%= @yoga_classes.first.try(:[], 'longitude') %>
-
-    var mapOptions = {
-      zoom: 12,
-      center: new google.maps.LatLng(latitude, longitude),
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    window.map = new google.maps.Map(document.getElementById('mapCanvas'),
-        mapOptions);
-
-    window.mapMarkers = [];
-    $.each(buildStudios(), function(i, studio) { 
-      marker = new google.maps.Marker({
-        position: new google.maps.LatLng(studio.latitude, studio.longitude),
-        map: window.map,
-        title: studio.name
-      });
-
-      window.mapMarkers.push(marker);
-      marker.id = studio.id
-    });
-  }
-  
-  google.maps.event.addDomListener(window, 'load', initialize);
+<script> 
 </script>
-
-<script>
-  $(function(){
-    $("input#locationSearch").on('focus',function(){
-      addLocationSearchHandler();
-    });
-
-    $("input#locationSearch").on('blur',function(){
-      removeLocationSearchHandler();
-    });
-
-    function addLocationSearchHandler(){
-      $("input#locationSearch").on('keyup',function(event){
-        if (event.which == '13') {
-          var location = $("input#locationSearch").val().toLowerCase();
-          location = location.split(' ').join('-');
-          document.location.href = '/studios-near/' + location;
-        }        
-      });
-    }
-
-    function removeLocationSearchHandler(){
-      $("input#locationSearch").off('keyup');
-    }
-  });
 </script>
