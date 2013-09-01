@@ -11,6 +11,7 @@ class StudiosController < ApplicationController
     @other_cities = cities
     latlng = @city[:latlng].split(',')
     @location = @city[:name]
+    @url = request.fullpath
 
     @studios = Studio.find(latlng[0], latlng[1])
   end 

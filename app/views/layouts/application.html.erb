@@ -22,6 +22,10 @@ li:active {
   opacity:0.8;
 }
 
+.mainContent {
+  margin-top:25px
+}
+
 </style>
 
 <!--[if lt IE 9]>
@@ -32,12 +36,11 @@ li:active {
 <body id="home">
    
   <div class="container" id="container">
-      <div class="well" style='position:fixed;top:0px;left:0px;right:0px;'>
+      <div class="well" style='z-index:500;position:fixed;top:0px;left:0px;right:0px;'>
         <h2><%= yield :header_text %></h2>
       </div>
-    	<%= yield %>
+    	<div class='mainContent'><%= yield %></div>
   </div>
-  
   
   <script src="/js/jquery.js"></script>
   <script src="/js/bootstrap.min.js"></script>

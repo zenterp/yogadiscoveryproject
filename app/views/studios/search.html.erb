@@ -9,16 +9,14 @@
     </select>
 <% end %>
 
-<div style="position:relative;background:none;opacity:0.9;height:450px;padding:0px;" class="well">
+  <div style="position:relative;background:none;opacity:0.9;height:450px;padding:0px;" class="well">
   
-    <div class='studiosList' style="overflow-y:scroll">
       <table class="table" >
-
         <% if @studios.present? && !@studios.empty? %>   
           <% @studios.each do |studio| %>
             <tr class='studioRow' data-latitude="<%= studio['latitude'] %>" data-longitude="<%= studio['longitude'] %>"> 
-              <td class='studioName' data-id="<%= studio['id']%>" style='padding:15px;'><%= truncate(studio['name'], length: 25) %></td>
-              <td style='padding:1.3em;'><%= studio['distance'].to_f.round(2) %> miles</td>
+              <td class='studioName' data-id="<%= studio['id']%>" style='background-color:#f5f5f5;padding:15px;'><%= link_to truncate(studio['name'], length: 25), "#{@url}/#{studio['id']}"  %></td>
+              <td style='background-color:#f5f5f5;padding:1.3em;'><%= studio['distance'].to_f.round(2) %> miles</td>
             </tr>
           <% end %>
         <% else %>
@@ -27,13 +25,11 @@
         </tr>
         <% end %>
       </table>
-    </div>
-
 </div>
 
 <script>
   $(function(){
-    $(".studiosList").delegate('tr','click', function(e){
+    $("tr").on('click', function(e){
       var url = document.location.href;
       document.location.href = url + "/" + $(e.target).parent().find('td:first').data('id');
     });
