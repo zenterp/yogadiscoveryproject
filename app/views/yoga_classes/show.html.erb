@@ -1,15 +1,14 @@
-<div class="well" style='margin-top:-50px'>
-  <h2><%= @data[:yoga_class_name] %> at <%= @data[:yoga_studio_name] %></h2>
+<% content_for :header_text do %>
+  <%= @data[:yoga_class_name] %> at <%= @data[:yoga_studio_name] %>
+<% end %>
 
-</div>
-
-<div id="disqus_thread" style='width:90%;margin:0 auto;margin-top:30px;'></div>
+<div id="disqus_thread" style='width:90%;margin:0 auto;margin-top:50px;'></div>
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES: THIS CODE IS ONLY AN EXAMPLE * * */
-    var disqus_shortname = 'yogadiscovery'; // Required - Replace example with your forum shortname
-    var disqus_identifier = '551';
-    var disqus_title = 'a unique title for each page where Disqus is present';
-    var disqus_url = 'http://yogadiscoveryproject.com/';
+    var disqus_shortname = 'yogadiscovery';
+    var disqus_identifier = '<%= @data[:url] %>';
+    var disqus_title = '<%= @data[:url] %>';
+    var disqus_url = '<%= @data[:url] %>';
 
     /* * * DON'T EDIT BELOW THIS LINE * * */
     (function() {

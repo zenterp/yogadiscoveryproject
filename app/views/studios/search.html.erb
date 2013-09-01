@@ -1,25 +1,18 @@
-<% content_for :navigation do %>
-
+<% content_for :header_text do %>
+  <%= @studios.count %> <%= @studios.count > 1 ? 'Studios' : 'Studio' %> near
+    <select id='citySelector'>
+      <option value='<%= @city.keys[0] %>'><%= @city[:name] %></option>
+      
+      <% @other_cities.each do |key,val| %>
+        <option value='<%= key %>'><%= val[:name] %></  option>
+      <% end %>
+    </select>
 <% end %>
 
-<div style="position:relative;background:none;opacity:0.9;height:450px;" class="well">
-
-  <div class="map" id="mapCanvas"></div>
+<div style="position:relative;background:none;opacity:0.9;height:450px;padding:0px;" class="well">
   
-  <div id="studiosList">
-      <div class="well" id='cityCountHeader'>
-        <h2><%= @studios.count %> <%= @studios.count > 1 ? 'Studios' : 'Studio' %> near
-          <select id='citySelector'>
-            <option value='<%= @city.keys[0] %>'><%= @city[:name] %></option>
-            
-            <% @other_cities.each do |key,val| %>
-              <option value='<%= key %>'><%= val[:name] %></  option>
-            <% end %>
-          </select>
-        </h2>
-      </div>
     <div class='studiosList' style="overflow-y:scroll">
-      <table class="table table-striped" >
+      <table class="table" >
 
         <% if @studios.present? && !@studios.empty? %>   
           <% @studios.each do |studio| %>
@@ -35,7 +28,6 @@
         <% end %>
       </table>
     </div>
-  </div>
 
 </div>
 
