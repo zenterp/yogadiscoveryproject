@@ -5,6 +5,8 @@ gem 'devise'
 gem 'httparty'
 gem 'humanize'
 gem 'redis'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 group :development do
   gem 'pry'

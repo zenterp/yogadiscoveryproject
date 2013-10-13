@@ -4,6 +4,8 @@ Yogadiscoveryproject::Application.routes.draw do
   namespace :api do 
     resources :studios, only: [:create]
   end 
+ 
+  get 'auth/facebook/callback', to: 'facebook/sessions#create'
 
   get 'studios/new', to: 'studios#new'
   get 'studios-near/:location', to: 'studios#search'
