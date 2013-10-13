@@ -1,10 +1,17 @@
 class Facebook::SessionsController < ApplicationController # GET /auth/facebook/callback
   def create
     begin
-      render json: request.env['omniauth.auth']
+      session[:facebook] = {
+        uid: auth_hash[:uid],
+        credentials: auth_hash[:credentials],
+        name: auth_hash[:info][:name]
+      } 
     rescue => e
-      render json: 'error'
       session[:facebook] = nil
     end 
   end 
+  
+  def auth_hash
+    request.env['omniauth.auth']
+  end
 end
