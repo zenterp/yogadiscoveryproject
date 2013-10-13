@@ -5,9 +5,8 @@ class Facebook::SessionsController < ApplicationController
       render json: request.env['omniauth.auth']
       session[:facebook] = request.env['omniauth.auth']
     rescue => e
+      render json: 'error'
       session[:facebook] = nil
     end 
-
-    redirect_to '/'
   end 
 end
