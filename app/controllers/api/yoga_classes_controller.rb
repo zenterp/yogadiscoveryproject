@@ -1,4 +1,4 @@
-Api::YogaClassesController < ApplicationController
+class Api::YogaClassesController < ApplicationController
   def create
 
   end 
