@@ -6,4 +6,8 @@ class Api::StudiosController < ApplicationController
       render status: 406 # not acceptable
     end
   end
+
+  def index
+    render json: Studio.find(params[:lat], params[:lng])
+  end
 end 

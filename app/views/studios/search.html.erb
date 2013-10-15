@@ -1,33 +1,56 @@
 <% content_for :header_text do %>
-  <%= @studios.count %> <%= @studios.count > 1 ? 'Studios' : 'Studio' %> near
-    <select id='citySelector'>
-      <option value='<%= @city.keys[0] %>'><%= @city[:name] %></option>
-      
-      <% @other_cities.each do |key,val| %>
-        <option value='<%= key %>'><%= val[:name] %></  option>
-      <% end %>
-    </select>
+  <a href='/studios/new' style='float:right;text-align:right;font-size:150%'>+</a>
+  <span style='float:left;padding-left:0.5em;'>Yoga Discovery Project</span>
 <% end %>
 
   <div style="position:relative;background:none;opacity:0.9;height:450px;padding:0px;" class="well">
   
-      <table class="table" >
-        <% if @studios.present? && !@studios.empty? %>   
-          <% @studios.each do |studio| %>
-            <tr class='studioRow' data-latitude="<%= studio['latitude'] %>" data-longitude="<%= studio['longitude'] %>"> 
-              <td class='studioName' data-id="<%= studio['id']%>" style='background-color:#f5f5f5;padding:15px;'><%= link_to truncate(studio['name'], length: 25), "#{@url}/#{studio['id']}"  %></td>
-              <td style='background-color:#f5f5f5;padding:1.3em;'><%= studio['distance'].to_f.round(2) %> miles</td>
-            </tr>
-          <% end %>
-        <% else %>
-        <tr> 
-          Sorry there are no studios in that area
-        </tr>
-        <% end %>
+      <table class="table">
+        <tbody></tbody>
       </table>
 </div>
 
+<script type='text/template' id="studioRowTemplate">
+  <tr class='studioRow'>
+    <td class='studioName' style='padding:1.3em;'>
+      <a href='/{{= id }}'>{{= name }}</a>
+    </td>
+    <td style='background-color:#f5f5f5;padding:1.3em;'>{{= distance }} miles</td>
+  </tr>
+</script>
+
 <script>
+
+  var studioRowTemplate = _.template($("#studioRowTemplate").html());
+  function foundLocation(position) {
+    getStudios(position, function (studios) {
+      $('tbody').html('');
+      $tbody = $("<div/>");
+      for (i in studios) {
+        studio = studios[i];
+        obj = {
+          name: studio.name.substring(0,22),
+          id: studio.id,
+          distance: Math.round(studio.distance * 100) / 100
+        }
+        $tbody.append(studioRowTemplate(obj));
+      }
+      $('tbody').html($tbody.html());
+    })
+  }
+
+  function getStudios(position, callback) {
+    url = '/api/studios?lat='+position.coords.latitude+'&lng='+position.coords.longitude;
+    $.getJSON(url, function(data) {
+      callback(data);
+    })
+  }
+
+  function noLocation() {
+    alert('Could not find location; please enable location settings for your browser');
+  }
+
+  navigator.geolocation.getCurrentPosition(foundLocation, noLocation);
   $(function(){
     $("tr").on('click', function(e){
       var url = document.location.href;
@@ -43,9 +66,5 @@
       });
       document.history.pushState(url,null,url);
     }
-
-    $("#citySelector").live('change', function(){
-       loadCity($(this).val());
-    });
   });
 </script>

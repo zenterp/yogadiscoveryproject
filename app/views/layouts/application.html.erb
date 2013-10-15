@@ -23,7 +23,21 @@ li:active {
 }
 
 .mainContent {
-  margin-top:25px
+  margin-top:-15px;
+}
+
+#header {
+  z-index:500;
+  position:fixed;
+  top:0px;
+  left:0px;
+  right:0px;
+  padding:0px 0px 5px 0px;
+}
+
+.studioName {
+  background-color:#f5f5f5;
+  padding:15px;
 }
 
 </style>
@@ -36,7 +50,7 @@ li:active {
 <body id="home">
    
   <div class="container" id="container">
-      <div class="well" style='z-index:500;position:fixed;top:0px;left:0px;right:0px;'>
+      <div class="well" id='header' style=''>
         <h2><%= yield :header_text %></h2>
       </div>
     	<div class='mainContent'><%= yield %></div>

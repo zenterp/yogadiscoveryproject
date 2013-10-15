@@ -14,7 +14,7 @@ class StudiosController < ApplicationController
     @url = request.fullpath
 
     @studios = Studio.find(latlng[0], latlng[1])
-  end 
+  end
 
   def cities
     @cities ||= City.all    
