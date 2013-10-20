@@ -6,12 +6,7 @@ Yogadiscoveryproject::Application.routes.draw do
   end 
 
   get 'auth/facebook/callback', to: 'facebook/sessions#create'
-
   get 'studios/new', to: 'studios#new'
-  get 'studios-near/:location', to: 'studios#search'
-  get 'studios-near/:location/:id', to: 'studios#show'
-  get 'studios/search', to: 'studios#search'
-  get 'studios/:studi_id/classes/:id', to: 'yoga_classes#show'
 
-  get '/', to: redirect('/studios-near/san-francisco-ca')
+  get '/', to: 'studios#nearby'
 end
