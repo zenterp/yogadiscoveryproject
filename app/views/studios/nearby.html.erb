@@ -18,6 +18,10 @@
 
 <script>
 
+  function buildMapUrl (lat, lng) {
+    return "http://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lng+"&zoom=16&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C"+lat+","+lng+"&sensor=false"
+  }
+
   var vent = _.extend({}, Backbone.Events);
 
   var Studio = Backbone.Model.extend({
@@ -110,6 +114,9 @@
           selectedStudio = studio;
         }
       }
+      img = $("<img/>").attr('src',buildMapUrl(selectedStudio.get('latitude'),selectedStudio.get('longitude')))
+      $('tbody').html(img).show();
+
       $('span.headerTitle').html(selectedStudio.get('name'));
     }
   });
