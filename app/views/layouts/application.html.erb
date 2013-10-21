@@ -26,7 +26,9 @@
       <div class="well" id='header' style=''>
         <h2><%= yield :header_text %></h2>
       </div>
-    	<div class='mainContent'><%= yield %></div>
+    	<div class='mainContent'>
+        <%= yield %>
+      </div>
   </div>
   
   <script src="/js/jquery.js"></script>
