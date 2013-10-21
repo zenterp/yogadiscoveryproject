@@ -3,5 +3,6 @@ Yogadiscoveryproject::Application.routes.draw do
 
   get 'auth/facebook/callback', to: 'facebook/sessions#create'
 
-  get '*', to: 'studios#nearby'
+  get '/', to: 'studios#nearby'
+  get '*path', to: redirect('/')
 end

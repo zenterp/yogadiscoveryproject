@@ -1,10 +1,9 @@
 <% content_for :header_text do %>
   <a href='/studios/new' style='float:right;text-align:right;font-size:150%'>+</a>
-  <span style='float:left;padding-left:0.5em;'>Yoga Discovery Project</span>
+  <span class='headerTitle' style='float:left;padding-left:0.5em;'>Yoga Discovery Project</span>
 <% end %>
 
   <div style="position:relative;background:none;opacity:0.9;height:450px;padding:0px;" class="well">
-  
       <table class="table">
         <tbody></tbody>
       </table>
@@ -86,24 +85,32 @@
 
     studioSelected : function (e) {
       e.preventDefault();
-      console.log(this.model.get('name'));
       vent.trigger('studio:selected', this.model.get('id'));
     }
   })
 
   var Router = Backbone.Router.extend({
     routes: {
-      '/' : 'nearby',
-      '/studios/:studioId': 'showStudio'
+      '' : 'nearby',
+      'studios/:studioId': 'showStudio'
     },
 
     nearby: function () {
-      studiosListView.el.show();
-    }, 
-
+      $(studiosListView.el).show();
+      navigator.geolocation.getCurrentPosition(foundLocation, noLocation);
+      $('span.headerTitle').html('Yoga Discovery Project');
+    },
     showStudio: function (studioId) {
-      console.log(studioId);
-      studiosListView.el.hide();
+      $(studiosListView.el).hide();
+      studiosJson = [];
+      var selectedStudio;
+      for (i in studios.models) {
+        studio = studios.models[i];
+        if (studio.get('id') == studioId ){
+          selectedStudio = studio;
+        }
+      }
+      $('span.headerTitle').html(selectedStudio.get('name'));
     }
   });
 
@@ -115,12 +122,16 @@
   });
 
   vent.bind('studio:selected', function (id) {
-    studio = studios.findWhere({ id: id });
-    router.navigate('/studios/'+studio.get('id'), { trigger : true });
+    router.navigate('/studios/'+id, { trigger : true });
   });
 
   var router = new Router();
-  Backbone.history.start({ pushState: true });
+  Backbone.history.start({
+    pushState: true,
+    silent: false
+  });
+
+  router.navigate('/');
 
   function foundLocation(position) {
     studios.getNearby(position.coords.latitude, position.coords.longitude);
@@ -130,5 +141,4 @@
     alert('Could not find location; please enable location settings for your browser');
   }
 
-  navigator.geolocation.getCurrentPosition(foundLocation, noLocation);
 </script>
