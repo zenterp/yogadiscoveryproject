@@ -16,6 +16,14 @@
   <td style='background-color:#f5f5f5;padding:1.3em;'>{{= distance }} miles</td>
 </script>
 
+<script type='text/template' id="yogaClassRowTemplate">
+  <td style='padding:1.3em;'>
+    <p>{{= name }}</p>
+    <p>{{= start_time }}</p>
+    <p>{{= duration }} minutes</p>
+  </td>
+</script>
+
 <script>
 
   function buildMapUrl (lat, lng) {
@@ -29,6 +37,8 @@
       console.log('studio selected');
     }
   });
+
+  var YogaClass = Backbone.Model.extend();
 
   var Studios = Backbone.Collection.extend({
     model: Studio,
@@ -44,6 +54,47 @@
     },
     parse: function (data) {
       return data.yoga_classes;
+    }
+  })
+
+  var StudioDetailsView = Backbone.View.extend({
+    el: 'tbody',
+    initialize: function () {
+      _.bindAll(this, 'render');
+      this.render();
+    },
+    render: function () {
+      this.$el.empty(); 
+      var self = this;
+
+      $img = $("<img/>");
+      $img.attr('src', buildMapUrl(this.model.get('latitude'), this.model.get('longitude')));
+      this.$el.append($img);
+
+      _.each(this.model.get('yoga_classes'), function(json) {
+        yogaClass = new YogaClass(json);
+        listItemView = new YogaClassListItemView({ model: yogaClass });
+        self.$el.append(listItemView.$el);
+      });
+
+      this.$el.html();
+      return this;
+    }
+  })
+
+
+  var YogaClassListItemView = Backbone.View.extend({
+    tagName: 'tr',
+    initialize: function () {
+      _.bindAll(this, 'render');
+      this.render();
+    },
+
+    template: _.template($('#yogaClassRowTemplate').html()),
+
+    render: function () {
+      this.$el.html(this.template(this.model.attributes));
+      return this;
     }
   })
 
@@ -101,11 +152,11 @@
 
     nearby: function () {
       $(studiosListView.el).show();
+      studiosListView.render();
       navigator.geolocation.getCurrentPosition(foundLocation, noLocation);
       $('span.headerTitle').html('Yoga Discovery Project');
     },
     showStudio: function (studioId) {
-      $(studiosListView.el).hide();
       studiosJson = [];
       var selectedStudio;
       for (i in studios.models) {
@@ -114,8 +165,8 @@
           selectedStudio = studio;
         }
       }
-      img = $("<img/>").attr('src',buildMapUrl(selectedStudio.get('latitude'),selectedStudio.get('longitude')))
-      $('tbody').html(img).show();
+
+      var studioDetailsView = new StudioDetailsView({ model: selectedStudio });
 
       $('span.headerTitle').html(selectedStudio.get('name'));
     }
