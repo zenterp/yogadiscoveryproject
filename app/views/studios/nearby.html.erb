@@ -17,7 +17,7 @@
 </script>
 
 <script type='text/template' id="newClassFormTemplate">
-  <form id='newYogaClass'>
+  <form action='post' href='http://yoganow-api.herokuapp.com/api/yoga_studios/55/yoga_classes.json' id='newYogaClass'>
     <p>Add a yoga class</p>
     <hr/>
     <label>name</label>
@@ -26,7 +26,16 @@
     <input type='text' name='start_time'></input>
     <label>duration (minutes)</label>
     <input type='text' name='duration'></input>
-    <input type='hidden' name='studio_id'></input>
+    <label>day(s)</label>
+    <select name='day' multiple>
+      <option value="monday">monday</option>
+      <option value="tuesday">tuesday</option>
+      <option value="wednesday">wednesday</option>
+      <option value="thursday">thursday</option>
+      <option value="friday">friday</option>
+      <option value="saturday">saturday</option>
+      <option value="sunday">sunday</option>
+    </select>
     <input type='submit'></input>
   </form>
 </script>
@@ -41,6 +50,22 @@
 
 <script>
 
+  $.fn.serializeObject = function() {
+      var o = {};
+      var a = this.serializeArray();
+      $.each(a, function() {
+          if (o[this.name] !== undefined) {
+              if (!o[this.name].push) {
+                  o[this.name] = [o[this.name]];
+              }
+              o[this.name].push(this.value || '');
+          } else {
+              o[this.name] = this.value || '';
+          }
+      });
+      return o;
+  };
+
   function buildMapUrl (lat, lng) {
     return "http://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lng+"&zoom=16&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C"+lat+","+lng+"&sensor=false"
   }
@@ -50,10 +75,33 @@
   var Studio = Backbone.Model.extend({
     select: function () {
       console.log('studio selected');
+    },
+
+    createYogaClass: function (params, callback) {
+      var self = this;
+      params.yoga_studio_id = self.get('id');
+      var url = 'http://yoganow-api.herokuapp.com/api/yoga_studios/'+self.get('id')+'/yoga_classes.json'
+      $.ajax({
+        type: 'POST',
+        url: url,
+        data: {
+          yoga_class: params
+        },
+        success: function(data){
+          console.log(data);
+        }
+      })
     }
   });
 
   var YogaClass = Backbone.Model.extend();
+
+  var YogaClasses = Backbone.Collection.extend({
+    model: YogaClass,
+    getUrl: function (studioId) {
+      return 'http://yoganow-api.herokuapp.com/api/studios'+studioId+'yoga_classes.json'
+    }
+  });
 
   var Studios = Backbone.Collection.extend({
     model: Studio,
@@ -126,7 +174,11 @@
     },
     formSubmitted: function (e) {
       e.preventDefault();
-      console.log('form submitted');
+      var day = 
+
+      studios.selected.createYogaClass($("form").serializeObject(), function (response) {
+        console.log(response);
+      })
     }
   })
 
@@ -247,7 +299,6 @@
 
   vent.bind('yogaClasses:new', function (yogaStudioId) {
     router.navigate('/studios/'+yogaStudioId+'/yoga_classes/new', { trigger : true });
-    new StudioNewYogaClassView;
   });
 
   var router = new Router();
