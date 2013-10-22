@@ -91,6 +91,7 @@
         },
         success: function(data){
           console.log(data);
+          callback(data);
         }
       })
     }
@@ -180,6 +181,7 @@
 
       studios.selected.createYogaClass(serializeObject.apply($("form")), function (response) {
         console.log(response);
+        vent.trigger('studio:created');
       })
     }
   })
@@ -297,6 +299,11 @@
 
   vent.bind('studio:selected', function (id) {
     router.navigate('/studios/'+id, { trigger : true });
+  });
+
+  vent.bind('studio:created', function () {
+    console.log('studio created');
+    router.navigate('/', { trigger : true });
   });
 
   vent.bind('yogaClasses:new', function (yogaStudioId) {
