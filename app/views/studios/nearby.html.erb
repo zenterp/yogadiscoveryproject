@@ -200,10 +200,6 @@
 
     render: function () {
       json = this.model.attributes;
-      startDate = new Date(json.start_time);
-      hours = startDate.getHours();
-      minutes = startDate.getMinutes();
-      json.start_time = hours + ':' + minutes;
       this.$el.html(this.template(json));
       return this;
     }
