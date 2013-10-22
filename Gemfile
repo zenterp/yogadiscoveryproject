@@ -7,6 +7,7 @@ gem 'humanize'
 gem 'redis'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'nokogiri'
 
 group :development do
   gem 'pry'

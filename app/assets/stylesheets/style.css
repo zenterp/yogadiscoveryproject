@@ -292,3 +292,29 @@ h2 {
     background-color: rgba(72, 3, 111, 0.8);
   }
 }
+
+#newYogaClass input[type='text'] {
+  width:80%;
+  margin-left:10%;
+  margin-right:10%;
+}
+
+#newYogaClass input[type='submit'] {
+  width:40%;
+  margin-left:30%;
+  margin-right:30%;
+  padding:10px;
+  margin-top:20px;
+}
+
+#newYogaClass label {
+  text-align:left;
+  margin-left:10%;
+}
+
+#newYogaClass p {
+  text-align:center;
+}
+form#newYogaClass {
+  margin-top:30px;
+}
