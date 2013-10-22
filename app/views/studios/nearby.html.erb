@@ -50,7 +50,7 @@
 
 <script>
 
-  $.fn.serializeObject = function() {
+  serializeObject = function() {
       var o = {};
       var a = this.serializeArray();
       $.each(a, function() {
@@ -80,6 +80,8 @@
     createYogaClass: function (params, callback) {
       var self = this;
       params.yoga_studio_id = self.get('id');
+      console.log('params');
+      console.log(params);
       var url = 'http://yoganow-api.herokuapp.com/api/yoga_studios/'+self.get('id')+'/yoga_classes.json'
       $.ajax({
         type: 'POST',
@@ -176,7 +178,7 @@
       e.preventDefault();
       var day = 
 
-      studios.selected.createYogaClass($("form").serializeObject(), function (response) {
+      studios.selected.createYogaClass(serializeObject.apply($("form")), function (response) {
         console.log(response);
       })
     }
