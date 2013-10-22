@@ -177,9 +177,11 @@
     },
     formSubmitted: function (e) {
       e.preventDefault();
-      var day = 
+      
+      data = serializeObject.apply($("form"));
+      $('form')[0].reset();
 
-      studios.selected.createYogaClass(serializeObject.apply($("form")), function (response) {
+      studios.selected.createYogaClass(data, function (response) {
         console.log(response);
         vent.trigger('studio:created');
       })
