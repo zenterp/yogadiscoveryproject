@@ -40,6 +40,8 @@ li:active {
   left:0px;
   right:0px;
   padding:0px 0px 5px 0px;
+  border-bottom:2px solid #aaa;
+  border-radius:2px;
 }
 
 .studioName {
@@ -228,7 +230,6 @@ h2 {
 	text-align:center;color:#black;padding-right:15px
 }
 
-@media (max-width: 600px) {
   #mapCanvas {
     display: none;
   }
@@ -281,7 +282,7 @@ h2 {
   }
   h2 {
   	text-align:center;
-  	color:#black;
+  	color:black;
   	padding-right:15px;
   	font-size:16px;
   }
@@ -291,7 +292,6 @@ h2 {
   .studiosList tbody {
     background-color: rgba(72, 3, 111, 0.8);
   }
-}
 
 #newYogaClass input[type='text'] {
   width:80%;
@@ -342,10 +342,23 @@ form#newYogaClass {
   }
 }
 
+.headerTitle {
+  float:left;
+  padding-left:0.5em;
+  color:black;
+}
+
 .tableWell {
   position:relative;
   background:none;
   opacity:0.9;
   height:450px;
   padding:0px;
+}
+
+#yogaClassesLink {
+  float:right;
+  text-align:right;
+  margin-right:15px;
+  margin-top:3px;
 }

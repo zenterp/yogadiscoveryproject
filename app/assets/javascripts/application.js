@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require underscore-min
 //= require backbone-min
-//= require app/router
 
 _.templateSettings = {
     interpolate: /\{\{\=(.+?)\}\}/g,
@@ -102,6 +101,38 @@ var Studios = Backbone.Collection.extend({
       }
     }
     return selectedStudio;
+  },
+  upcomingYogaClasses: function () {
+    upcomingYogaClasses = [];
+    _.each(this.models, function(studio) {
+      _.each(studio.get('yoga_classes'), function(yogaClass) {
+        yogaClass.studio = studio.attributes;
+        upcomingYogaClasses.push(yogaClass); 
+      });
+    });
+    return upcomingYogaClasses;
+  }
+});
+
+var YogaClassesView = Backbone.View.extend({
+  el: 'tbody',
+  initialize: function (opts) {
+    _.bindAll(this, 'render');
+    this.yogaClasses = opts.yogaClasses;
+    this.render();
+  },
+  render: function () {
+    this.$el.empty();
+    var self = this;
+    console.log(self.$el);
+    _.each(this.yogaClasses, function(yc) {
+      yogaClass = new YogaClass(yc);
+      listItemView = new YogaClassListItemView({ model: yogaClass });
+      $('tbody').append(listItemView.$el);
+      console.log(listItemView.$el);
+    });
+
+    console.log('things');
   }
 })
 
@@ -220,12 +251,65 @@ var StudioListItemView = Backbone.View.extend({
     e.preventDefault();
     vent.trigger('studio:selected', this.model.get('id'));
   }
+})
+
+var initialLoad = true;
+var Router = Backbone.Router.extend({
+  routes: {
+    '' : 'nearby',
+    'yoga-studios/nearby': 'nearby',
+    'studios/:studioId': 'showStudio',
+    'studios/:studioId/yoga_classes/new':'newYogaClass',
+    'yoga-classes/upcoming':'upcomingYogaClasses'
+  },
+  nearby: function () {
+    if (initialLoad) {
+      initialLoad = false;
+      function foundLocation(position) {
+        studios.getNearby(position.coords.latitude, position.coords.longitude);
+      }
+      function noLocation() {
+        alert('Could not find location; please enable location settings for your browser');
+      }
+      navigator.geolocation.getCurrentPosition(foundLocation, noLocation);
+    }
+    $(studiosListView.el).show();
+    studiosListView.render();
+    $('span.headerTitle').html('Yoga Discovery Project');
+  },
+  showStudio: function (studioId) {
+    selectedStudio = studios.findById(studioId);
+    studios.selected = selectedStudio;
+    var studioDetailsView = new StudioDetailsView({ model: selectedStudio });
+    $('span.headerTitle').html(selectedStudio.get('name'));
+  },
+  newYogaClass: function () {
+    $('span.headerTitle').html();
+    new StudioNewYogaClassView;
+  },
+  upcomingYogaClasses: function () {
+    if (!upcomingYogaClassesView) {
+      var upcomingYogaClassesView = new YogaClassesView({ yogaClasses: studios.upcomingYogaClasses() });
+    }
+
+    if (!sortedYogaClasses) {
+      var sortedYogaClasses = [];
+    }
+    upcomingYogaClassesView.$el.empty();
+  }
 });
+
+$('nav a').on('click', function (e) {
+  e.preventDefault();
+  url = $(this).attr('href');
+  router.navigate(url, { trigger: true });
+})
 
 $('#add').on('click', function (e) {
   e.preventDefault();
+  console.log(studios);
   vent.trigger('yogaClasses:new', studios.selected.get("id"));
-});
+})
 
 var studios = new Studios();
 studiosListView = new StudiosListView({ collection: studios });
@@ -239,8 +323,7 @@ vent.bind('studio:selected', function (id) {
 });
 
 vent.bind('studio:created', function () {
-  console.log('studio created');
-  router.navigate('/', { trigger : true });
+  alert('studio created! high five!\n\n How about another?');
 });
 
 vent.bind('yogaClasses:new', function (yogaStudioId) {

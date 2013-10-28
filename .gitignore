@@ -2,3 +2,4 @@
 /.env
 /tmp
 /log/*.log
+app/assets/.DS_Store
