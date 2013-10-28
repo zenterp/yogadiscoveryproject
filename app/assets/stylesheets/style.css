@@ -341,3 +341,11 @@ form#newYogaClass {
     text-align:center;
   }
 }
+
+.tableWell {
+  position:relative;
+  background:none;
+  opacity:0.9;
+  height:450px;
+  padding:0px;
+}
