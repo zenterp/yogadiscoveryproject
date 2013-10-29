@@ -21,15 +21,62 @@ _.templateSettings = {
     evaluate: /\{\{(.+?)\}\}/g
 };
 
-decorateTime = function (integerTime) {
-  var pm = false;
+var TimeManager = {
+  decomposeTime: function (integerTime) {
+    var pm = false,
+        hour, minute,
+        decoratedTime;
 
-  if (integerTime > 1159) {
-    integerTime = integerTime - 1200;
-    pm = true;
+    if (integerTime > 1159) {
+      integerTime = integerTime - 1200;
+      pm = true;
+    }
+
+    hour = Math.floor(integerTime / 100);
+    if ((hour == 0)) {
+      hour = 12;
+    }
+    minute = integerTime % 100;
+
+    return {
+      hour: hour,
+      minute: minute,
+      pm: pm
+    }
+  },
+
+  decorateTime: function (integerTime) {
+    time = TimeManager.decomposeTime(integerTime);
+    minutes = time.minute
+    if (minutes == 0) {
+      minutes.toString();
+      minutes = minutes + "0";
+    } 
+
+    decoratedTime = time.hour + ':' + minutes + (time.pm ? 'pm' : 'am')
+    return decoratedTime;
+  },
+  addMinutesToTime: function (integerTime, minutes) {
+    time = TimeManager.decomposeTime(integerTime);
+    hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
+
+    sumOfMinutes = time.minute + minutes;
+    sumOfHours = time.hour + hours;
+    if (sumOfMinutes > 60) {
+      hours += 1
+      minutes = sumOfMinutes % 60;
+    } else {
+      minutes = sumOfMinutes;
+    }
+
+    if (time.pm) {
+      sumOfHours += 12;
+    }
+
+    outputIntegerTime = (sumOfHours * 100) + minutes;
+    return outputIntegerTime;
   }
-
-  hour = Math.floor(integerTime);
 }
 
 serializeObject = function() {
@@ -122,7 +169,9 @@ var Studios = Backbone.Collection.extend({
         upcomingYogaClasses.push(yogaClass); 
       });
     });
-    return upcomingYogaClasses;
+    return _.sortBy(upcomingYogaClasses, function(yogaClass) {
+      return yogaClass.start_time;
+    });
   }
 });
 
@@ -139,6 +188,7 @@ var YogaClassesView = Backbone.View.extend({
     console.log(self.$el);
     _.each(this.yogaClasses, function(yc) {
       yogaClass = new YogaClass(yc);
+      yogaClass.subtitle = yc.studio.name || '';
       listItemView = new YogaClassListItemView({ model: yogaClass });
       $('tbody').append(listItemView.$el);
       console.log(listItemView.$el);
@@ -214,6 +264,18 @@ var YogaClassListItemView = Backbone.View.extend({
 
   render: function () {
     json = this.model.attributes;
+    json.end_time = TimeManager.decorateTime(
+      TimeManager.addMinutesToTime(
+        json.start_time, json.duration
+      )
+    );
+    json.start_time = TimeManager.decorateTime(json.start_time);
+    try {
+      json.subtitle = json.studio.name;
+    } catch(e) {
+      json.subtitle = '';
+    }
+    
     this.$el.html(this.template(json));
     return this;
   }
@@ -272,7 +334,7 @@ var Router = Backbone.Router.extend({
     'yoga-studios/nearby': 'nearby',
     'studios/:studioId': 'showStudio',
     'studios/:studioId/yoga_classes/new':'newYogaClass',
-    'yoga-classes/upcoming':'upcomingYogaClasses'
+    'yoga-classes/today':'upcomingYogaClasses'
   },
   nearby: function () {
     if (initialLoad) {

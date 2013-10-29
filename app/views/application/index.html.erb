@@ -1,7 +1,7 @@
 <% content_for :header_text do %>
   <nav>
     <a id='add' style='float:right;text-align:right;font-size:150%'> + </a>
-    <a id='yogaClassesLink' href='/yoga-classes/upcoming'> C </a>
+    <a id='yogaClassesLink' href='/yoga-classes/today'> C </a>
     <a id='yogaClassesLink' href='/yoga-studios/nearby'> S </a>
     <a class='headerTitle'href='/'>Yoga Discovery Project</a>
   </nav>
@@ -45,10 +45,11 @@
 </script>
 
 <script type='text/template' id="yogaClassRowTemplate">
-  <td style='padding:1.3em;'>
+  <td>
     <p>{{= name }}</p>
-    <p>{{= start_time }}</p>
-    <p>{{= duration }} minutes</p>
+    <p>{{= subtitle }}</p>
+  <td>
+    <p class='pull-right'>{{= start_time }} - {{= end_time }}</p>
   </td>
 </script>
 
