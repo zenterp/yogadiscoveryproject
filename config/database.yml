@@ -1,9 +1,0 @@
-development:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  database: d9lcnm07mk98l9
-  username: tdnipnkpmxjshy
-  password: pDtRNaKUdynaBPrIlLb5IWwawX
-  host: ec2-107-21-112-215.compute-1.amazonaws.com
-  port: 5432
