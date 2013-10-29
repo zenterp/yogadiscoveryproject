@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require underscore-min
 //= require backbone-min
+//= require_tree .
 
 _.templateSettings = {
     interpolate: /\{\{\=(.+?)\}\}/g,
@@ -288,6 +289,8 @@ var Router = Backbone.Router.extend({
     new StudioNewYogaClassView;
   },
   upcomingYogaClasses: function () {
+    $('tbody').html('');
+
     if (!upcomingYogaClassesView) {
       var upcomingYogaClassesView = new YogaClassesView({ yogaClasses: studios.upcomingYogaClasses() });
     }
@@ -295,7 +298,6 @@ var Router = Backbone.Router.extend({
     if (!sortedYogaClasses) {
       var sortedYogaClasses = [];
     }
-    upcomingYogaClassesView.$el.empty();
   }
 });
 
