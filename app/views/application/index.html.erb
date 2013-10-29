@@ -1,0 +1,55 @@
+<% content_for :header_text do %>
+  <nav>
+    <a id='add' style='float:right;text-align:right;font-size:150%'> + </a>
+    <a id='yogaClassesLink' href='/yoga-classes/upcoming'> C </a>
+    <a id='yogaClassesLink' href='/yoga-studios/nearby'> S </a>
+    <a class='headerTitle'href='/'>Yoga Discovery Project</a>
+  </nav>
+<% end %>
+
+  <div class="well tableWell">
+    <table class="table">
+      <tbody></tbody>
+    </table>
+  </div>
+
+<script type='text/template' id="studioRowTemplate">
+  <td class='studioName' style='padding:1.3em;'>
+    <p><a href='/{{= id }}'>{{= name }}</a> <small>({{= classes_today_count }})</small></p>
+  </td>
+  <td style='background-color:#f5f5f5;padding:1.3em;'>{{= distance }} miles</td>
+</script>
+
+<script type='text/template' id="newClassFormTemplate">
+  <form action='post' id='newYogaClass'>
+    <p>Add a yoga class</p>
+    <hr/>
+    <label>name</label>
+    <input type='text' name='name'></input>
+    <label>start time (0715)</label>
+    <input type='text' name='start_time'></input>
+    <label>duration (minutes)</label>
+    <input type='text' name='duration'></input>
+    <label>day(s)</label>
+    <select name='day' multiple>
+      <option value="monday">monday</option>
+      <option value="tuesday">tuesday</option>
+      <option value="wednesday">wednesday</option>
+      <option value="thursday">thursday</option>
+      <option value="friday">friday</option>
+      <option value="saturday">saturday</option>
+      <option value="sunday">sunday</option>
+    </select>
+    <input type='submit'></input>
+  </form>
+</script>
+
+<script type='text/template' id="yogaClassRowTemplate">
+  <td style='padding:1.3em;'>
+    <p>{{= name }}</p>
+    <p>{{= start_time }}</p>
+    <p>{{= duration }} minutes</p>
+  </td>
+</script>
+
+<%= javascript_include_tag :application %>
