@@ -21,6 +21,17 @@ _.templateSettings = {
     evaluate: /\{\{(.+?)\}\}/g
 };
 
+decorateTime = function (integerTime) {
+  var pm = false;
+
+  if (integerTime > 1159) {
+    integerTime = integerTime - 1200;
+    pm = true;
+  }
+
+  hour = Math.floor(integerTime);
+}
+
 serializeObject = function() {
     var o = {};
     var a = this.serializeArray();
