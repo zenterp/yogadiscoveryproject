@@ -1,8 +1,6 @@
 Yogadiscoveryproject::Application.routes.draw do
-  devise_for :users
-
   get 'auth/facebook/callback', to: 'facebook/sessions#create'
 
-  get '/', to: 'studios#nearby'
+  # Send all other traffic to the javascript application entry point
   get '*path', to: redirect('/')
 end

@@ -227,7 +227,9 @@ a.tumblr:hover {background-position:-199px 24px;}
 }
 
 h2 {
-	text-align:center;color:#black;padding-right:15px
+	text-align:center;
+  color:black;
+  padding-right:15px;
 }
 
   #mapCanvas {
