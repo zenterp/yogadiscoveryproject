@@ -367,4 +367,6 @@ form#newYogaClass {
 
 a, a:hover, a:active, a:visited {
   text-decoration: none;
+  -moz-user-select: none; /* mozilla browsers */
+  -khtml-user-select: none; /* webkit browsers */
 }
