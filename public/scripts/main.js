@@ -10,10 +10,17 @@ require.config({
   }
 });
 
-require(["jquery", "underscore", "backbone", "backbone.marionette.min", "time_manager"], function($, _, Backbone, Marionette, TimeManager) {
-    console.log($);
-    console.log(_);
-    console.log(Backbone);
+require([ 
+  "jquery", 
+  "underscore", 
+  "backbone", 
+  'backbone.wreqr',
+  "marionette", 
+  "time_manager", 
+  "collections/studios",
+], function($, _, Backbone, Wreqr, Marionette, TimeManager, Studios) {
+
+    var vent = _.extend({}, Backbone.Events);
 
     $(function(){
       _.templateSettings = {
@@ -41,86 +48,12 @@ require(["jquery", "underscore", "backbone", "backbone.marionette.min", "time_ma
         return "http://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lng+"&zoom=16&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C"+lat+","+lng+"&sensor=false"
       }
 
-      var vent = _.extend({}, Backbone.Events);
-
-      var Studio = Backbone.Model.extend({
-        select: function () {
-          console.log('studio selected');
-        },
-
-        createYogaClass: function (params, callback) {
-          var self = this;
-          params.yoga_studio_id = self.get('id');
-          console.log('params');
-          console.log(params);
-          var url = 'http://yoganow-api.herokuapp.com/api/yoga_studios/'+self.get('id')+'/yoga_classes.json'
-          $.ajax({
-            type: 'POST',
-            url: url,
-            data: {
-              yoga_class: params
-            },
-            success: function(data){
-              console.log(data);
-              callback(data);
-            }
-          })
-        }
-      });
-
       var YogaClass = Backbone.Model.extend();
 
       var YogaClasses = Backbone.Collection.extend({
         model: YogaClass,
         getUrl: function (studioId) {
           return 'http://yoganow-api.herokuapp.com/api/studios'+studioId+'yoga_classes.json'
-        }
-      });
-
-      var Studios = Backbone.Collection.extend({
-        model: Studio,
-        el: 'tbody',
-        getNearby: function (lat, lng, callback) {
-          var url = 'http://yoganow-api.herokuapp.com/api/yoga_classes/nearby.json'
-          this.url = url + '?lat=' + lat + '&lng=' + lng;
-          console.log('get nearby', url);
-          this.fetch({
-            success: function () {
-              vent.trigger('studios:fetchedNearby');
-            }
-          });
-        },
-        parse: function (data) {
-          return data.yoga_classes;
-        },
-        findById: function (studioId) {
-          var selectedStudio;
-          var self = this;
-          for (i in self.models) {
-            studio = self.models[i];
-            if (studio.get('id') == studioId ){
-              selectedStudio = studio;
-            }
-          }
-          return selectedStudio;
-        },
-        upcomingYogaClasses: function () {
-          upcomingYogaClasses = [];
-          _.each(this.models, function(studio) {
-            _.each(studio.get('yoga_classes'), function(yogaClass) {
-              yogaClass.studio = studio.attributes;
-
-              dateNow = new Date();
-              timeNow = (dateNow.getHours() * 100 + dateNow.getMinutes());
-
-              if (yogaClass.start_time > timeNow) {
-                upcomingYogaClasses.push(yogaClass);   
-              }
-            });
-          });
-          return _.sortBy(upcomingYogaClasses, function(yogaClass) {
-            return yogaClass.start_time;
-          });
         }
       });
 
@@ -170,7 +103,7 @@ require(["jquery", "underscore", "backbone", "backbone.marionette.min", "time_ma
           this.$el.html();
           return this;
         }
-      })
+      });
 
       var StudioNewYogaClassView = Backbone.View.extend({
         el: 'tbody',
