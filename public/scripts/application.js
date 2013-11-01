@@ -86,14 +86,12 @@ $(function(){
 
   var Studio = Backbone.Model.extend({
     select: function () {
-      console.log('studio selected');
+      
     },
 
     createYogaClass: function (params, callback) {
       var self = this;
       params.yoga_studio_id = self.get('id');
-      console.log('params');
-      console.log(params);
       var url = 'http://yoganow-api.herokuapp.com/api/yoga_studios/'+self.get('id')+'/yoga_classes.json'
       $.ajax({
         type: 'POST',
@@ -102,7 +100,6 @@ $(function(){
           yoga_class: params
         },
         success: function(data){
-          console.log(data);
           callback(data);
         }
       })
@@ -174,16 +171,12 @@ $(function(){
     render: function () {
       this.$el.empty();
       var self = this;
-      console.log(self.$el);
       _.each(this.yogaClasses, function(yc) {
         yogaClass = new YogaClass(yc);
         yogaClass.subtitle = yc.studio.name || '';
         listItemView = new YogaClassListItemView({ model: yogaClass });
         $('tbody').append(listItemView.$el);
-        console.log(listItemView.$el);
       });
-
-      console.log('things');
     }
   })
 
@@ -224,7 +217,6 @@ $(function(){
     },
     render: function () {
       this.$el.empty();
-      console.log(this.template());
       this.$el.append(this.template());
       return this;
     },
@@ -235,7 +227,6 @@ $(function(){
       $('form')[0].reset();
 
       studios.selected.createYogaClass(data, function (response) {
-        console.log(response);
         vent.trigger('studio:created');
       })
     }
@@ -372,7 +363,6 @@ $(function(){
 
     $('#add').on('click', function (e) {
       e.preventDefault();
-      console.log(studios);
       vent.trigger('yogaClasses:new', studios.selected.get("id"));
     })
   })

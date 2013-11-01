@@ -173,3 +173,7 @@ a.tumblr:hover {background-position:-199px 24px;}
 .white_box input { 
 	float:right;
 }
+
+a { 
+	text-decoration: none;
+}

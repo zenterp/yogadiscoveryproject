@@ -2,7 +2,6 @@ define(['backbone'], function (Backbone) {
 
   var Studio = Backbone.Model.extend({
     select: function () {
-      console.log('studio selected');
     },
   
     createYogaClass: function (params, callback) {

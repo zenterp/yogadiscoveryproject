@@ -43,9 +43,9 @@
 
 <script type='text/template' id="studioRowTemplate">
   <td class='studioName' style='padding:1.3em;'>
-    <p><a href='/{{= id }}'>{{= name }}</a> <small>({{= classes_today_count }})</small></p>
+    <p><a href='/<%= id %>'><%= name %></a> <small>(<%= classes_today_count %>)</small></p>
   </td>
-  <td style='background-color:#f5f5f5;padding:1.3em;'>{{= distance }} miles</td>
+  <td style='background-color:#f5f5f5;padding:1.3em;'><%= distance %> miles</td>
 </script>
 
 <script type='text/template' id="newClassFormTemplate">
@@ -74,10 +74,10 @@
 
 <script type='text/template' id="yogaClassRowTemplate">
   <td>
-    <p>{{= name }}</p>
-    <p>{{= subtitle }}</p>
+    <p><%= name %></p>
+    <p><%= subtitle %></p>
   <td>
-    <p class='pull-right'>{{= start_time }} - {{= end_time }}</p>
+    <p class='pull-right'><%= start_time %> - <%= end_time %></p>
   </td>
 </script>
 

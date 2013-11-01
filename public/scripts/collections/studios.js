@@ -45,6 +45,8 @@ define(['backbone', 'models/studio', 'vent'], function (Backbone, Studio, vent) 
     }
   });
 
-  return Studios;
+  var studios = new Studios();
+
+  return studios;
 })
 
