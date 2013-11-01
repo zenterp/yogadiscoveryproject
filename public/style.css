@@ -364,3 +364,7 @@ form#newYogaClass {
   margin-right:15px;
   margin-top:3px;
 }
+
+a, a:hover, a:active, a:visited {
+  text-decoration: none;
+}

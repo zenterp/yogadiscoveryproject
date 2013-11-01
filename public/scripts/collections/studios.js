@@ -49,4 +49,3 @@ define(['backbone', 'models/studio', 'vent'], function (Backbone, Studio, vent) 
 
   return studios;
 })
-
