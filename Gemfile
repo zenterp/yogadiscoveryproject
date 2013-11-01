@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
+gem 'sinatra'
 gem 'devise'
 gem 'httparty'
 gem 'humanize'
