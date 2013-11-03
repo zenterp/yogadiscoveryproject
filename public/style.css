@@ -391,3 +391,10 @@ a, a:hover, a:active, a:visited {
 .navigation a {
   color:#fafafa;
 }
+
+.table {
+  margin-bottom:45px;
+}
+img {
+  width:100%;
+}

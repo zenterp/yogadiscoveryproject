@@ -50,6 +50,7 @@ require([
     });
 
     vent.bind('studio:selected', function (id) {
+      console.log('selected');
       router.navigate('/studios/'+id, { trigger : true });
     });
 

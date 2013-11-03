@@ -27,20 +27,35 @@
 <body id="home">
    
   <div class="container" id="container">
-      <div class="well navigation" id='header' style=''>
-        <h2>  <nav>
-    <a id='add' style='float:right;text-align:right;font-size:150%'> + </a>
-    <a class='headerTitle'href='/'>Yoga Discovery Project</a>
-  </nav>
-</h2>
-      </div>
-    	<div class='mainContent'>
-        
-<div class="well tableWell">
-  <table class="table">
-    <tbody></tbody>
-  </table>
-</div>
+    <div class="well navigation" id='header' style=''>
+      <nav>
+        <h2>
+          <a id='add' style='float:right;text-align:right;font-size:150%'> + </a>
+          <a class='headerTitle'href='/'>Yoga Discovery Project</a>
+        </h2>
+      </nav>
+    </div>
+    <div class='mainContent'>
+      <table class="table">
+        <tbody></tbody>
+      </table>
+    </div>
+      <nav class='footerNav navigation' style='background-color: #ddd; border-top:1px solid #aaa; position:fixed;bottom:0px;height:40px;left:0px;right:0px;'>
+        <a href='/yoga-studios/nearby' class='pull-left' style='padding:10px 30px; font-size:150%'>Nearby</a>
+        <a href='/yoga-classes/upcoming' class='pull-right' style='padding:10px 30px; font-size:150%'>Upcoming</a>
+      </nav>
+  </div>
+</body>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-36236651-3', 'yogadiscoveryproject.com');
+  ga('send', 'pageview');
+</script>
 
 <script type='text/template' id="studioRowTemplate">
   <td class='studioName' style='padding:1.3em;'>
@@ -82,25 +97,5 @@
   </td>
 </script>
 
-      </div>
-      <nav class='footerNav navigation' style='background-color: #ddd; border-top:1px solid #aaa; position:fixed;bottom:0px;height:40px;left:0px;right:0px;'>
-        <a href='/yoga-studios/nearby' class='pull-left' style='padding:10px 30px; font-size:150%'>Nearby</a>
-        <a href='/yoga-classes/upcoming' class='pull-right' style='padding:10px 30px; font-size:150%'>Upcoming</a>
-      </nav>
-  </div>
-  
-
-  <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-  ga('create', 'UA-36236651-3', 'yogadiscoveryproject.com');
-  ga('send', 'pageview');
-
-</script>
-
 <script data-main="/scripts/main" src="/scripts/require.js"></script>
-</body>
 </html>

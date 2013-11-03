@@ -7,7 +7,7 @@ define(['backbone', 'vent'], function (Backbone, vent) {
     tagName: 'tr',
     className: 'studioRow',
     events: {
-      'click a' : 'studioSelected'
+      'click' : 'studioSelected'
     },
 
     template: _.template($("#studioRowTemplate").html()),

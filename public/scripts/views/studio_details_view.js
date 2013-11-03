@@ -18,8 +18,14 @@ define([
       this.$el.empty(); 
       var self = this;
   
-      $img = $("<img/>");
-      $img.attr('src', buildMapUrl(this.model.get('latitude'), this.model.get('longitude')));
+      $img = $("<div/>");
+      $img.css('height', '150px');
+      width = $('body').css('width');
+      $img.css('width', width);
+      url = buildMapUrl(this.model.get('latitude'), this.model.get('longitude'));
+      console.log(url);
+      $img.css('background-image', "url('"+url+"')");
+      $img.css('background-size', "100% 100%");
       this.$el.append($img);
   
       _.each(this.model.get('yoga_classes'), function(json) {
