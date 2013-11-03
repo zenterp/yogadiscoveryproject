@@ -370,3 +370,24 @@ a, a:hover, a:active, a:visited {
   -moz-user-select: none; /* mozilla browsers */
   -khtml-user-select: none; /* webkit browsers */
 }
+
+.navigation {
+  color:white;
+  text-align:center;
+  position:absolute;    
+  background-color:#3B0470;
+  background-image:-moz-linear-gradient(top,#7109aa,#370470);
+  background-image:-webkit-gradient(linear,0 0,0 100%,from(#7109aa),to(#370470));
+  background-image:-webkit-linear-gradient(top,#7109aa,#370470);
+  background-image:-o-linear-gradient(top,#7109aa,#370470);
+  background-image:linear-gradient(to bottom,#7109aa,#370470);
+  background-repeat:repeat-x;
+  left:0px; 
+  right:0px;
+  color:white;
+
+  width:100%;
+}
+.navigation a {
+  color:#fafafa;
+}

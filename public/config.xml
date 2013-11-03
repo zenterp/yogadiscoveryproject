@@ -1,23 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
     <widget xmlns = "http://www.w3.org/ns/widgets"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.zenterp.yogadiscoveryproject"
+        id        = "com.yogasf.net"
         versionCode="10" 
         version   = "1.0.0">
 
-    <feature name="http://api.phonegap.com/1.0/network"/>
-    <feature name="http://api.phonegap.com/1.0/geolocation"/>
+        <plugin name="Geolocation" value="org.apache.cordova.GeoBroker" />
 
     <!-- versionCode is optional and Android only -->
 
-    <name>YogaNow</name>
+    <name>Yoga SF</name>
+
+    <preference name="show-splash-screen-spinner" value="true" />
+    <preference name="fullscreen" value="true" />
+
+    <icon src="res/drawable-mdpi/ic_launcher.png" gap:platform="android" gap:density="mdpi" />
+    <icon src="res/drawable-hdpi/ic_launcher.png" gap:platform="android" gap:density="hdpi" />
+    <icon src="res/drawable-xhdpi/ic_launcher.png" gap:platform="android" gap:density="xhdpi" />
 
     <description>
-        An app that finds nearby yoga studios
+        An app for finding nearby yoga classes in San Francisco
     </description>
 
-    <author href="http://www.yogadiscoveryproject.com" email="zeiler.steven@gmail.com">
-        Zenterp 
+    <author href="https://build.phonegap.com" email="zeiler.steven@gmail.com">
+        Steven Zeiler 
     </author>
 
 </widget>
